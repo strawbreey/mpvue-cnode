@@ -3,16 +3,42 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import { getTimeInfo } from '@/utils/index'
+
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    detail: null,
+    content: null,
+    author: {
+      avatar_url: '',
+      loginname: '',
+      last_reply_at: '',
+      title: '',
+      reply_count: 0
+    }
+  },
+  getters: {
+    article: state => state.detail ? state.detail.content : null,
+    replies: state => state.detail ? state.detail.replies : null
   },
   mutations: {
-    increment: (state) => {
-      const obj = state
-      obj.count += 1
+    getArticle: (state, action) => {
+      if (action) {
+        state.detail = action
+        state.content = action.content
+        state.author.avatar_url = action.author.avatar_url
+        state.author.loginname = action.author.loginname
+        state.author.last_reply_at = getTimeInfo(action.last_reply_at)
+        state.author.title = action.title
+        state.author.reply_count = action.reply_count
+      }
+      // state.detail = action
+      // state.content = action.content
+      // state.author = action.author
+      // state.author.last_reply_at = action.last_reply_at
+      // console.log(state)
     },
     decrement: (state) => {
       const obj = state

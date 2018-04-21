@@ -30,13 +30,19 @@ export default {
     'tabBar': {
       'list': [{
         'pagePath': 'pages/index/main',
-        'text': '首页'
+        'text': '首页',
+        'iconPath': 'static/images/icon/home-fill.png',
+        'selectedIconPath': 'static/images/icon/home-fill.png'
       }, {
         'pagePath': 'pages/notification/main',
-        'text': '消息'
+        'text': '消息',
+        'iconPath': 'static/images/icon/message-fill.png',
+        'selectedIconPath': 'static/images/icon/message-fill.png'
       }, {
         'pagePath': 'pages/me/main',
-        'text': '我的'
+        'text': '我的',
+        'iconPath': 'static/images/icon/user-fill.png',
+        'selectedIconPath': 'static/images/icon/user-fill.png'
       }]
     }
   }

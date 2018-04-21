@@ -11,7 +11,12 @@
     "lint": "eslint --ext .js,.vue src"
   },
   "dependencies": {
+    "dgram": "^1.0.1",
+    "flyio": "^0.5.4",
+    "lodash": "^4.17.5",
+    "minapp-api-promise": "^1.0.1",
     "mpvue": "^1.0.8",
+    "mpvue-wxparse": "^0.4.5",
     "node-sass": "^4.8.3",
     "sass-loader": "^7.0.1",
     "vuex": "^2.3.1"

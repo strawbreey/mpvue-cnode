@@ -54,8 +54,10 @@
 @import "node_modules/bootstrap/scss/close";
 @import "node_modules/bootstrap/scss/nav";
 
-// @import "node_modules/bootstrap/scss/utilities";
+// 小程序不能识别@support, 所以移除position: sticky
+// 小程序不能识别属性选择器, 所以移除属性选择器
 
+// @import "node_modules/bootstrap/scss/utilities";
 @import "node_modules/bootstrap/scss/utilities/align";
 @import "node_modules/bootstrap/scss/utilities/background";
 @import "node_modules/bootstrap/scss/utilities/borders";
