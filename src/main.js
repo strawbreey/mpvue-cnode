@@ -19,7 +19,8 @@ export default {
       'pages/details/main',
       'pages/notification/main',
       'pages/me/main',
-      'pages/comment/main'
+      'pages/comment/main',
+      'pages/user/main'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -39,7 +40,7 @@ export default {
         'iconPath': 'static/images/icon/message-fill.png',
         'selectedIconPath': 'static/images/icon/message-fill.png'
       }, {
-        'pagePath': 'pages/me/main',
+        'pagePath': 'pages/user/main',
         'text': '我的',
         'iconPath': 'static/images/icon/user-fill.png',
         'selectedIconPath': 'static/images/icon/user-fill.png'

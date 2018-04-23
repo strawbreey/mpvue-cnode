@@ -4,18 +4,18 @@
     <scroll-view scroll-y style="height: calc(100vh - 100rpx);">
       <view v-for="(item, i) in replies" :item="item" :key="i">
         <div class="media border-bottom p-3">
-          <img class="mr-3" :src="item.author.avatar_url" alt="Generic placeholder image bg-primary" style="width: 100rpx; height: 100rpx">
+          <img class="mr-3" :src="item.author.avatar_url" alt="Generic placeholder image bg-primary" style="min-width: 100rpx; width: 100rpx; height: 100rpx">
           <div class="media-body">
             <!-- <h5 class="mt-0">{{item.content}}</h5> -->
-            <p>{{item.author.loginname}}</p>
-            <time>{{item.create_at}}</time>   
+            <p class="pb-0 mb-0">{{item.author.loginname}}</p>
+            <time class="small">{{item.create_at}}</time>   
             <wxParse :content="item.content"/>    
           </div>
         </div>
       </view>
     </scroll-view>
     <div class="fixed-bottom d-flex w-100 p-2 bg-white border-top">
-      <input class="form-control w-100" aria-describedby="emailHelp" placeholder="Enter email" />
+      <input class="form-control w-100" aria-describedby="emailHelp" placeholder="回复..." />
     </div>
   </div>
 </template>
@@ -66,5 +66,8 @@ export default {
   padding: 5px 10px;
   color: blue;
   border: 1px solid blue;
+}
+.wxParse {
+  margin: 0;
 }
 </style>

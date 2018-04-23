@@ -67,7 +67,6 @@ export default {
     }
   },
   mounted () {
-    // console.log(this.$root.$mp.query)
     this.params.id = this.$root.$mp.query.id
     this.getArticle()
   }

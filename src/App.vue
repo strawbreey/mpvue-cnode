@@ -27,4 +27,8 @@ html,
 body{
   font-size: 16px;
 }
+
+.wxParse {
+  margin: 0;
+}
 </style>

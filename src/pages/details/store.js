@@ -2,6 +2,7 @@
 // make sure to call Vue.use(Vuex) if using a module system
 import Vue from 'vue'
 import Vuex from 'vuex'
+import _ from 'lodash'
 
 import { getTimeInfo } from '@/utils/index'
 
@@ -11,6 +12,7 @@ const store = new Vuex.Store({
   state: {
     detail: null,
     content: null,
+    replies: null,
     author: {
       avatar_url: '',
       loginname: '',
@@ -33,6 +35,11 @@ const store = new Vuex.Store({
         state.author.last_reply_at = getTimeInfo(action.last_reply_at)
         state.author.title = action.title
         state.author.reply_count = action.reply_count
+
+        _.map(action.replies, res => {
+          res.create_at = getTimeInfo(res.create_at)
+        })
+        // state.replies = action.replies
       }
       // state.detail = action
       // state.content = action.content
