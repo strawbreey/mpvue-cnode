@@ -15,7 +15,7 @@ export default {
 <style>
 
 .load8 {
-  font-size: 6px;
   margin-top: 48px;
+  font-size: 12rpx;
 }
 </style>

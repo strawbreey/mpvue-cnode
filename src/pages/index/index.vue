@@ -4,7 +4,7 @@
       <loading  />
     </div>
     <!-- 导航栏 -->
-    <ul class="nav nav-justified shadow-sm">
+    <ul class="nav nav-justified shadow-sm mb-1">
       <li class="nav-item" v-bind:class="{ active: params.tab === 'all', 'text-primary': params.tab === 'all' }" @click="selectTab('all')">
         <span class="nav-link">全部</span>
       </li>
@@ -14,7 +14,7 @@
       <li class="nav-item" v-bind:class="{ active: params.tab === 'ask', 'text-primary': params.tab === 'ask' }" @click="selectTab('ask')">
         <span class="nav-link">问答</span>
       </li>
-      <li class="nav-item" v-bind:class="{ active: params.tab === 'job', 'text-primary': params.tab === 'job' }" @click="selectTab('job')">
+      <li class="nav-item" v-bind:class="{ active: params.tab === 'job', 'text-primary': params.tab === 'job' }" @click="selectTab('dev')">
         <span class="nav-link">招聘</span>
       </li>
     </ul>
@@ -25,9 +25,9 @@
         <!-- <view class="nav-item">{{item}}</view> -->
         <a :href="'/pages/details/main?id='+item.id" class="card shadow-sm p-0 rounded-0 border-0 mb-3">
           <div class="card-header d-flex bg-white justify-content-center border-bottom-0" @click.stop="gotoUser(item.author.loginname)">
-            <img :src="item.author.avatar_url" alt="..." class="rounded-circle mr-0" style="height: 75rpx; width: 75rpx;">
-            <div class="flex-fill p-2">{{item.author.loginname}}</div>
-            <div class="p-2">{{item.last_reply_at}}</div>
+            <img :src="item.author.avatar_url" alt="..." class="rounded-circle mr-2" style="height: 64rpx; width: 64rpx;">
+            <div class="flex-fill p-1">{{item.author.loginname}}</div>
+            <div class="p-1">{{item.last_reply_at}}</div>
           </div>
           <div class="card-body pt-0">
             <h6 class="card-title font-weight-bold">{{item.title}}</h6>
@@ -55,7 +55,8 @@ export default {
         limit: 10
       },
       scroll: {
-        top: 0
+        top: 0,
+        scrollTop: 0
       },
       loading: false
     }
@@ -104,11 +105,12 @@ export default {
       }
     },
     scrollFn (e) {
-      // console.log(e)
-      this.scroll.top = e.mp.detail.scrollTop
+      this.scroll.scrollTop = e.mp.detail.scrollTop
     },
-    loadMore () {
+    loadMore (e) {
+      console.log(e)
       console.log('loadmore')
+      this.scroll.top = this.scroll.scrollTop
       this.params.page++
       this.getArticleList()
     },

@@ -1,27 +1,31 @@
 <template>
-  <div class="container">
+  <div class="container p-3">
     <!-- loading -->
     <div :class="{'d-none': !loading}">
       <loading  />
     </div>
-    <!-- 用户信息 -->
-    <div class="media">
-      <img class="mr-3" :src="author.avatar_url" alt="Generic placeholder image" style="width: 100rpx; height: 100rpx">
-      <div class="media-body">
-        <div>{{author.loginname}}</div>
-        <div>{{author.last_reply_at}}</div>        
+
+    <div :class="{'d-none': loading}">
+      <!-- 用户信息 -->
+      <div class="media">
+        <img class="mr-3" :src="author.avatar_url" alt="Generic placeholder image" style="width: 100rpx; height: 100rpx">
+        <div class="media-body">
+          <div>{{author.loginname}}</div>
+          <div>{{author.last_reply_at}}</div>        
+        </div>
+      </div>
+
+      <!-- 内容 -->
+      <div class="card p-0 pb-5 m-0 border-0 rounded-0">
+        <div class="card-body px-0 w-100" v-if="article" >
+          <h5 class="card-title">{{author.title}}</h5>        
+          <wxParse :content="article" />
+          <time class="small text-right pt-5">编辑于 {{detail.create_at}}</time>
+          <p class="small text-right">著作权归作者所有</p>
+        </div>
       </div>
     </div>
 
-    <!-- 内容 -->
-    <div class="card p-0 pb-5 m-0 border-0 rounded-0">
-      <div class="card-body px-0 w-100" v-if="article" >
-        <h5 class="card-title">{{author.title}}</h5>        
-        <wxParse :content="article" />
-        <time class="small text-right pt-5">编辑于 {{detail.create_at}}</time>
-        <p class="small text-right">著作权归作者所有</p>
-      </div>
-    </div>
 
     <!-- 底部菜单栏 -->
     <div class="fixed-bottom d-flex w-auto p-2 px-4 bg-white border-top small">
@@ -52,7 +56,7 @@ export default {
       params: {
         id: null
       },
-      loading: false
+      loading: true
     }
   },
 
@@ -77,7 +81,6 @@ export default {
   },
   methods: {
     getArticle () {
-      console.log(this.params.id)
       this.loading = true
       let data = {}
       store.commit('clearArticle')
@@ -89,7 +92,6 @@ export default {
       })
     },
     collectTopic (e) {
-      console.log(this.params.id)
       this.loading = true
 
       let data = {
@@ -126,6 +128,7 @@ export default {
   },
   mounted () {
     this.params.id = this.$root.$mp.query.id
+    this.loading = true
     this.getArticle()
   }
 }

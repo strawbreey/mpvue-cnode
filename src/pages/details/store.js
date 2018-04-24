@@ -40,13 +40,8 @@ const store = new Vuex.Store({
         _.map(action.replies, res => {
           res.create_at = getTimeInfo(res.create_at)
         })
-        // state.replies = action.replies
+        state.replies = action.replies
       }
-      // state.detail = action
-      // state.content = action.content
-      // state.author = action.author
-      // state.author.last_reply_at = action.last_reply_at
-      // console.log(state)
     },
     clearArticle: (state) => {
       state.detail = null
@@ -65,8 +60,21 @@ const store = new Vuex.Store({
       state.detail.is_collect = true
     },
     deCollectTopic: (state, action) => {
-      console.log(action)
       state.detail.is_collect = false
+    },
+    ups: (state, action) => {
+      _.map(state.replies, res => {
+        if (res.id === action) {
+          if (res.is_uped === true) {
+            _.remove(res.ups, res => {
+              return res === action
+            })
+          } else {
+            res.ups.push(action)
+          }
+          res.is_uped = !res.is_uped
+        }
+      })
     }
   }
 })

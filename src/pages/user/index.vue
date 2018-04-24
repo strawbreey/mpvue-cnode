@@ -24,7 +24,7 @@
             <div class="media border-bottom p-3 bg-light">
               <img class="mr-3 bg-light" :src="item.author.avatar_url" style="width: 100rpx; height: 100rpx; background-color: red" alt="Generic placeholder image">
               <div class="media-body" @click="oneRead(item.id)">
-                <h6 class="mt-0">{{item.author.loginname}} 发布了 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a> 主题</h6>
+                <h6 class="mt-0">{{item.author.loginname}} 发布了主题 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a></h6>
                 <div>{{item.create_at}}</div>
               </div>
             </div>
@@ -35,7 +35,7 @@
             <div class="media border-bottom p-3 bg-light">
               <img class="mr-3 bg-light" :src="item.author.avatar_url" style="width: 100rpx; height: 100rpx; background-color: red" alt="Generic placeholder image">
               <div class="media-body" @click="oneRead(item.id)">
-                <h6 class="mt-0">{{item.author.loginname}} 发布了 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a> 主题</h6>
+                <h6 class="mt-0">{{item.author.loginname}} 评论了主题 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a></h6>
                 <div>{{item.create_at}}</div>
               </div>
             </div>
@@ -46,7 +46,7 @@
             <div class="media border-bottom p-3 bg-light">
               <img class="mr-3 bg-light" :src="item.author.avatar_url" style="width: 100rpx; height: 100rpx; background-color: red" alt="Generic placeholder image">
               <div class="media-body" @click="oneRead(item.id)">
-                <h6 class="mt-0">{{item.author.loginname}} 发布了 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a> 主题</h6>
+                <h6 class="mt-0">{{item.author.loginname}} 收藏了主题 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a></h6>
                 <div>{{item.create_at}}</div>
               </div>
             </div>
