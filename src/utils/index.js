@@ -5,6 +5,8 @@ function formatNumber (n) {
 
 function formatTime (date) {
   date = new Date(date)
+  const time = new Date().getTime() - date.getTime()
+
   const year = date.getFullYear()
   const month = date.getMonth() + 1
   const day = date.getDate()
@@ -16,7 +18,12 @@ function formatTime (date) {
   const t1 = [year, month, day].map(formatNumber).join('/')
   const t2 = [hour, minute, second].map(formatNumber).join(':')
 
-  return `${t1} ${t2}`
+  if ((time / 3600000) > 24) {
+    return t1
+  } else {
+    return t2
+  }
+  // return `${t1} ${t2}`
 }
 
 function getTimeInfo (str) {

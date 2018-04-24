@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
+
 import { getTimeInfo } from '@/utils/index'
 
 Vue.use(Vuex)
@@ -34,9 +35,9 @@ const store = new Vuex.Store({
       //   res.last_reply_at = getTimeInfo(res.last_reply_at)
       // })
     },
-    decrement: (state) => {
-      const obj = state
-      obj.count -= 1
+    clearlist: (state) => {
+      console.log('222')
+      state.list = []
     }
   }
 })

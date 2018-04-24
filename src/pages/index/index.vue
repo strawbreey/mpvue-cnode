@@ -1,5 +1,8 @@
 <template>
   <div class="container p-0 bg-light">
+    <div :class="{'d-none': !loading}">
+      <loading  />
+    </div>
     <!-- 导航栏 -->
     <ul class="nav nav-justified shadow-sm">
       <li class="nav-item" v-bind:class="{ active: params.tab === 'all', 'text-primary': params.tab === 'all' }" @click="selectTab('all')">
@@ -40,6 +43,7 @@
 import api from '@/api/index'
 import store from './store'
 import wxParse from 'mpvue-wxparse'
+import loading from '@/components/loading'
 // import { mapGetters, mapState } from 'vuex'
 
 export default {
@@ -52,12 +56,14 @@ export default {
       },
       scroll: {
         top: 0
-      }
+      },
+      loading: false
     }
   },
 
   components: {
-    wxParse
+    wxParse,
+    loading
   },
 
   computed: {
@@ -75,19 +81,27 @@ export default {
     selectTab (e) {
       this.params.page = 1
       this.params.tab = e
-      this.scroll.top = 0
+      // this.scroll.top = 0
       this.getArticleList()
     },
     getArticleList () {
-      api.get('/topics', this.params).then(response => {
-        if (this.params.page === 1) {
+      this.loading = true
+      if (this.params.page === 1) {
+        store.commit('clearlist')
+        api.get('/topics', this.params).then(response => {
           store.commit('getlist', response)
-        } else {
+          this.loading = false
+        }).catch(error => {
+          console.log(error)
+        })
+      } else {
+        api.get('/topics', this.params).then(response => {
           store.commit('getMoreList', response)
-        }
-      }).catch(error => {
-        console.log(error)
-      })
+          this.loading = false
+        }).catch(error => {
+          console.log(error)
+        })
+      }
     },
     scrollFn (e) {
       // console.log(e)
@@ -112,13 +126,6 @@ export default {
 </script>
 
 <style lang="scss">
-page{
-  font-size: 16px;
-}
-.h6{
-  font-size: 1rem;
-}
-
 button::after{
   // content: none;
 }

@@ -4,7 +4,7 @@ const replaceTagSelectorMap = require('postcss-mpvue-wxss/lib/wxmlTagMap')
 
 const optopns = {
   cleanSelector: ['*', 'button'],
-  remToRpx: 32,
+  remToRpx: 28,
   replaceTagSelector: Object.assign(replaceTagSelectorMap, {
     '*': 'view, text'
   })

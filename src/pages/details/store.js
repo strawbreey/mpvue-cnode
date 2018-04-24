@@ -4,7 +4,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
 
-import { getTimeInfo } from '@/utils/index'
+import { getTimeInfo, formatTime } from '@/utils/index'
 
 Vue.use(Vuex)
 
@@ -29,6 +29,7 @@ const store = new Vuex.Store({
     getArticle: (state, action) => {
       if (action) {
         state.detail = action
+        state.detail.create_at = formatTime(action.create_at)
         state.content = action.content
         state.author.avatar_url = action.author.avatar_url
         state.author.loginname = action.author.loginname
@@ -47,9 +48,25 @@ const store = new Vuex.Store({
       // state.author.last_reply_at = action.last_reply_at
       // console.log(state)
     },
-    decrement: (state) => {
-      const obj = state
-      obj.count -= 1
+    clearArticle: (state) => {
+      state.detail = null
+      state.content = null
+      state.replies = null
+      state.author = {
+        avatar_url: '',
+        loginname: '',
+        last_reply_at: '',
+        title: '',
+        reply_count: 0
+      }
+    },
+    collectTopic: (state, action) => {
+      console.log(action)
+      state.detail.is_collect = true
+    },
+    deCollectTopic: (state, action) => {
+      console.log(action)
+      state.detail.is_collect = false
     }
   }
 })

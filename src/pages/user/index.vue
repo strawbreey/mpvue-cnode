@@ -1,5 +1,8 @@
 <template>
   <div class="bg-light" style="min-height: 100vh;">
+    <div :class="{'d-none': !loading}">
+      <loading  />
+    </div>
     <!-- 用户信息 -->
     <div class="card justify-content-center align-items-center border-0 bg-white mb-3 shadow-sm">
       <img class="bg-primary rounded-circle mt-3" :src="userinfo.avatar_url" alt="Card image" style="width:200rpx; height: 200rpx;">
@@ -57,12 +60,18 @@
 <script>
 import api from '@/api/index'
 import store from './store'
+import loading from '@/components/loading'
 
 export default {
   data () {
     return {
-      current: 0
+      current: 0,
+      loading: false
     }
+  },
+
+  components: {
+    loading
   },
 
   computed: {
@@ -82,11 +91,13 @@ export default {
 
   methods: {
     getUserInfo () {
-      console.log(this.$root.$mp)
+      // console.log(this.$root.$mp)
+      this.loading = true
       if (this.$root.$mp.query.name) {
         api.get('/user/' + this.$root.$mp.query.name).then(response => {
           console.log(response)
           store.commit('getUserInfo', response)
+          this.loading = false
         }).catch(error => {
           console.log(error)
         })
@@ -94,6 +105,7 @@ export default {
         api.get('/topic_collect/' + this.$root.$mp.query.name).then(response => {
           console.log(response)
           store.commit('getCollectList', response)
+          this.loading = false
         }).catch(error => {
           console.log(error)
         })
@@ -103,12 +115,14 @@ export default {
           if (loginname) {
             api.get('/user/' + loginname).then(response => {
               store.commit('getUserInfo', response)
+              this.loading = false
             }).catch(error => {
               console.log(error)
             })
 
             api.get('/topic_collect/' + loginname).then(response => {
               store.commit('getCollectList', response)
+              this.loading = false
             }).catch(error => {
               console.log(error)
             })
@@ -132,15 +146,3 @@ export default {
 
 }
 </script>
-
-<style>
-.log-list {
-  display: flex;
-  flex-direction: column;
-  padding: 40rpx;
-}
-
-.log-item {
-  margin: 10rpx;
-}
-</style>

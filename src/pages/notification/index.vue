@@ -1,5 +1,8 @@
 <template>
   <div class="container p-0">
+    <div :class="{'d-none': !loading}">
+      <loading  />
+    </div>
     <!-- 已登录 -->
     <div class="visible">
       <nav class="navbar navbar-expand-lg navbar-light bg-light clearfix p-2">
@@ -24,12 +27,12 @@
         </view>
       </scroll-view>
     </div>
-    <!-- loading -->
-    <div class="invisible fixed-top d-flex justify-content-center">
+
+    <!-- <div class="invisible fixed-top d-flex justify-content-center">
       <div class="load8">
         <div class="loader">Loading...</div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 请先登录 -->
     <div class="invisible fixed-top d-flex justify-content-center">
@@ -45,8 +48,14 @@
 import store from './store'
 import api from '@/api/index'
 import wxParse from 'mpvue-wxparse'
+import loading from '@/components/loading'
 
 export default {
+  data () {
+    return {
+      loading: false
+    }
+  },
   computed: {
     list () {
       return store.state.readMessageList
@@ -57,17 +66,20 @@ export default {
   },
 
   components: {
-    wxParse
+    wxParse,
+    loading
   },
 
   methods: {
     getNotification () {
       let data = {
-        accesstoken: 'd94a1a54-f215-4757-bcfd-486be823e876'
+        accesstoken: ''
       }
+      this.loading = true
       api.get('/messages', data).then(response => {
         console.log('222')
         store.commit('getNotification', response)
+        this.loading = false
       }).catch(error => {
         console.log(error)
       })
