@@ -29,6 +29,7 @@ export default {
       navigationBarTextStyle: 'white'
     },
     'tabBar': {
+      'selectedColor': '#1296db',
       'list': [{
         'pagePath': 'pages/index/main',
         'text': '首页',
@@ -37,8 +38,8 @@ export default {
       }, {
         'pagePath': 'pages/notification/main',
         'text': '消息',
-        'iconPath': 'static/images/icon/message.png',
-        'selectedIconPath': 'static/images/icon/message-fill.png'
+        'iconPath': 'static/images/icon/notification.png',
+        'selectedIconPath': 'static/images/icon/notification-fill.png'
       }, {
         'pagePath': 'pages/user/main',
         'text': '我的',

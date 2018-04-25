@@ -7,16 +7,38 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    login: false,
+    accesstoken: '',
+    loginname: '',
+    avatar_url: ''
   },
   mutations: {
-    increment: (state) => {
-      const obj = state
-      obj.count += 1
+    getLoginInfoByStore: (state) => {
+      if (!state.accesstoken) {
+        try {
+          state.accesstoken = wx.getStorageSync('accesstoken')
+          state.loginname = wx.getStorageSync('loginname')
+          state.avatar_url = wx.getStorageSync('avatar_url')
+          if (state.accesstoken) {
+            state.login = true
+          } else {
+            state.login = false
+          }
+        } catch (e) {
+          // Do something when catch error
+        }
+      }
     },
-    decrement: (state) => {
-      const obj = state
-      obj.count -= 1
+    logout: (state) => {
+      try {
+        wx.clearStorageSync()
+        state.accesstoken = ''
+        state.loginname = ''
+        state.avatar_url = ''
+        state.login = false
+      } catch (e) {
+        // Do something when catch error
+      }
     }
   }
 })

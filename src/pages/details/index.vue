@@ -29,15 +29,15 @@
 
     <!-- 底部菜单栏 -->
     <div class="fixed-bottom d-flex w-auto p-2 px-4 bg-white border-top small">
-      <div v-if="detail && detail.is_collect" class="flex-fill d-flex justify-content-start align-items-center small" @click="deCollectTopic(detail.id)">
-        <img src="/static/images/icon/mark-fill.png" style="height: 20px; width: 20px; "/> 已收藏</div>
-      <div v-else class="flex-fill d-flex justify-content-start align-items-center small" @click="collectTopic(detail.id)">
-        <img src="/static/images/icon/mark.png" style="height: 20px; width: 20px;"/> 收藏</div>
+      <a v-if="detail && detail.is_collect" class="flex-fill d-flex justify-content-start align-items-center small" @click="deCollectTopic(detail.id)">
+        <img src="/static/images/icon/mark-fill.png" style="height: 20px; width: 20px; "/> 已收藏</a>
+      <a v-else class="flex-fill d-flex justify-content-start align-items-center small" @click="collectTopic(detail.id)">
+        <img src="/static/images/icon/mark.png" style="height: 20px; width: 20px;"/> 收藏</a>
       <a class="d-flex w-25 justify-content-end align-items-center">
-        <img src="/static/images/icon/share.png" style="height: 20px; width: 20px;"/> 分享
+        <img class="pr-2" src="/static/images/icon/share.png" style="height: 20px; width: 20px;"/> 分享
       </a>
       <a href="/pages/comment/main" class="d-flex w-25 justify-content-end align-items-center">
-        <img src="/static/images/icon/message.png" style="height: 20px; width: 20px;"/> ({{author.reply_count}})
+        <img class="pr-2" src="/static/images/icon/message.png" style="height: 20px; width: 20px;"/> {{ author.reply_count ? '(' +  author.reply_count + ')' : '' }}
       </a>
     </div>
   </div>
