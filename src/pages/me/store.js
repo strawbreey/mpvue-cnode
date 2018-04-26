@@ -28,9 +28,6 @@ const store = new Vuex.Store({
         state.userinfo.loginname = action.loginname
         state.userinfo.score = action.score
 
-        state.reply = action.recent_replies
-        state.topic = action.recent_topics
-
         _.map(action.recent_replies, res => {
           res.last_reply_at = getTimeInfo(res.last_reply_at)
         })
@@ -38,6 +35,9 @@ const store = new Vuex.Store({
         _.map(action.recent_topics, res => {
           res.last_reply_at = getTimeInfo(res.last_reply_at)
         })
+
+        state.reply = action.recent_replies
+        state.topic = action.recent_topics
       }
     },
     getCollectList: (state, action) => {

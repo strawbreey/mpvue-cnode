@@ -25,10 +25,10 @@
           <scroll-view scroll-y style="height: calc(100vh - 88rpx);">
             <div v-for="(item, i) in topic" :item="item" :key="i">
               <div class="media border-bottom border-gray p-3 bg-white">
-                <img class="mr-3" :src="item.author.avatar_url" style="width: 100rpx; height: 100rpx;" alt="Generic placeholder image">
+                <img class="mr-3 icon-5 rounded" :src="item.author.avatar_url"  alt="Generic placeholder image">
                 <div class="media-body" @click="oneRead(item.id)">
                   <h6 class="mt-0">{{item.author.loginname}} 发布了主题 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a></h6>
-                  <div>{{item.create_at}}</div>
+                  <div>{{item.last_reply_at}}</div>
                 </div>
               </div>
             </div>
@@ -39,10 +39,10 @@
           <scroll-view scroll-y style="height: calc(100vh - 88rpx);">
             <div v-for="(item, i) in reply" :item="item" :key="i">
               <div class="media border-bottom border-gray p-3 bg-white">
-                <img class="mr-3" :src="item.author.avatar_url" style="width: 100rpx; height: 100rpx;" alt="Generic placeholder image">
+                <img class="mr-3 icon-5 rounded" :src="item.author.avatar_url" alt="Generic placeholder image">
                 <div class="media-body" @click="oneRead(item.id)">
                   <h6 class="mt-0">{{item.author.loginname}} 评论了主题 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a></h6>
-                  <div>{{item.create_at}}</div>
+                  <div>{{item.last_reply_at}}</div>
                 </div>
               </div>
             </div>
@@ -53,10 +53,10 @@
           <scroll-view scroll-y style="height: calc(100vh - 88rpx);">
             <div v-for="(item, i) in collect" :item="item" :key="i">
               <div class="media border-bottom border-gray p-3 bg-white">
-                <img class="mr-3" :src="item.author.avatar_url" style="width: 100rpx; height: 100rpx;" alt="Generic placeholder image">
+                <img class="mr-3 icon-5 rounded" :src="item.author.avatar_url" alt="Generic placeholder image">
                 <div class="media-body" @click="oneRead(item.id)">
                   <h6 class="mt-0">{{item.author.loginname}} 收藏了主题 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a></h6>
-                  <div>{{item.create_at}}</div>
+                  <div>{{item.last_reply_at}}</div>
                 </div>
               </div>
             </div>
@@ -216,6 +216,15 @@ export default {
   mounted () {
     auth.commit('getLoginInfoByStore')
     if (this.login) {
+      this.getUserInfo()
+    }
+  },
+
+  onShow () {
+    console.log('onShow')
+    console.log(this.topic)
+    if (this.login && this.topic.length < 1) {
+      console.log('2333')
       this.getUserInfo()
     }
   }

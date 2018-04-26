@@ -4,7 +4,7 @@
       <loading  />
     </div>
 
-    <nav class="d-flex shadow-sm p-2">
+    <nav class="d-flex shadow-sm p-2 mb-2">
       <div class="flex-fill small" href="#">通知列表</div>
       <div v-if="unread && unread.length" class="float-right small" @click="allRead">
         全部已读
@@ -18,10 +18,10 @@
     <!-- 已登录 -->
     <div :class="{ invisible: !login }">
       <!-- 列表 -->
-      <scroll-view scroll-y style="height: calc(100vh - 2rem);">
+      <scroll-view scroll-y style="height: calc(100vh - 2.5rem);" class="bg-light">
         <div v-for="(item, i) in unread" :item="item" :key="i">
-          <div class="media border-bottom p-3 bg-gradient-light">
-            <img class="mr-3" :src="item.author.avatar_url" style="width: 100rpx; height: 100rpx;" alt="avatar">
+          <div class="media border-bottom p-3 bg-gradient-light bg-white">
+            <img class="mr-3 icon-5 rounded" @click.stop="gotoUser(item.author.loginname)" :src="item.author.avatar_url" alt="avatar">
             <div class="media-body" @click="oneRead(item.id)">
               <h6 v-if="item.type === 'reply'" class="mt-0">{{item.author.loginname}} 评论了<span class="inline font-weight-bold" @click="goto(item.topic.id)" :href="'/pages/details/main?id='+item.topic.id"> {{item.topic.title}}</span> 主题下</h6>
               <wxParse :content="item.reply.content" />
@@ -31,8 +31,8 @@
         </div>
 
         <div v-for="(item, i) in read" :item="item" :key="i">
-          <div class="media border-bottom p-3">
-            <img class="mr-3" :src="item.author.avatar_url" style="width: 100rpx; height: 100rpx;" alt="avatar">
+          <div class="media border-bottom p-3 bg-white">
+            <img class="mr-3 icon-5 rounded" @click.stop="gotoUser(item.author.loginname)" :src="item.author.avatar_url"  alt="avatar">
             <div class="media-body" @click="oneRead(item.id)">
               <h6 v-if="item.type === 'reply'" class="mt-0">{{item.author.loginname}} 评论了<span class="inline font-weight-bold" @click="goto(item.topic.id)" :href="'/pages/details/main?id='+item.topic.id"> {{item.topic.title}}</span> 主题下</h6>
               <wxParse :content="item.reply.content" />
@@ -72,6 +72,7 @@ export default {
       loading: false
     }
   },
+
   computed: {
     read () {
       return store.state.readMessageList
@@ -90,6 +91,11 @@ export default {
   },
 
   methods: {
+    gotoUser (e) {
+      wx.navigateTo({
+        url: '/pages/me/main?name=' + e
+      })
+    },
     getNotification () {
       let data = {
         accesstoken: ''
@@ -143,6 +149,14 @@ export default {
   mounted () {
     auth.commit('getLoginInfoByStore')
     if (this.login) {
+      this.getNotification()
+    }
+  },
+
+  onShow () {
+    console.log('onShow')
+    if (this.login && !this.read) {
+      console.log('2333')
       this.getNotification()
     }
   }

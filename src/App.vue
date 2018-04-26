@@ -7,7 +7,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss'>
 page{
   font-size: 1rem;
 }
@@ -20,6 +20,15 @@ page{
 }
 
 .wxParse {
-  margin: 0;
+  margin: 0 !important;
+  .img{
+    // padding: 50% 0;
+    display: block;
+    width: 100%;
+    padding: .5rem 0;
+    padding-bottom: 1rem;
+    // min-height: 100px;
+    height: 375rpx;
+  }
 }
 </style>

@@ -1,27 +1,27 @@
 <template>
-  <div class="container p-3">
+  <div class="container p-0 bg-light" style="min-height: 100vh">
     <!-- loading -->
     <div :class="{'d-none': !loading}">
       <loading  />
     </div>
 
-    <div :class="{'d-none': loading}">
+    <div :class="{'d-none': loading}" class="bg-white p-3 card rounded-0 shadow-sm">
       <!-- 用户信息 -->
-      <div class="media">
-        <img class="mr-3" :src="author.avatar_url" alt="Generic placeholder image" style="width: 100rpx; height: 100rpx">
+      <div class="media"  @click.stop="gotoUser(author.loginname)">
+        <img class="mr-3 rounded-1 icon-5" :src="author.avatar_url" alt="avatar">
         <div class="media-body">
           <div>{{author.loginname}}</div>
-          <div>{{author.last_reply_at}}</div>        
+          <div class="small">{{author.last_reply_at}}</div>        
         </div>
       </div>
 
       <!-- 内容 -->
-      <div class="card p-0 pb-5 m-0 border-0 rounded-0">
+      <div class="card p-0 pb-4 m-0 border-0 rounded-0">
         <div class="card-body px-0 w-100" v-if="article" >
-          <h5 class="card-title">{{author.title}}</h5>        
+          <h5 class="font-weight-bold pb-3">{{author.title}}</h5> 
           <wxParse :content="article" />
-          <time class="small text-right pt-5">编辑于 {{detail.create_at}}</time>
-          <p class="small text-right">著作权归作者所有</p>
+          <time class="text-right pt-4">编辑于 {{detail.create_at}}</time>
+          <p class="text-right">著作权归作者所有</p>
         </div>
       </div>
     </div>
@@ -30,14 +30,14 @@
     <!-- 底部菜单栏 -->
     <div class="fixed-bottom d-flex w-auto p-2 px-4 bg-white border-top small">
       <a v-if="detail && detail.is_collect" class="flex-fill d-flex justify-content-start align-items-center small" @click="deCollectTopic(detail.id)">
-        <img src="/static/images/icon/mark-fill.png" style="height: 20px; width: 20px; "/> 已收藏</a>
+        <img src="/static/images/icon/mark-fill.png" class="icon-3"/> 已收藏</a>
       <a v-else class="flex-fill d-flex justify-content-start align-items-center small" @click="collectTopic(detail.id)">
-        <img src="/static/images/icon/mark.png" style="height: 20px; width: 20px;"/> 收藏</a>
+        <img src="/static/images/icon/mark.png" class="icon-3"/> 收藏</a>
       <a class="d-flex w-25 justify-content-end align-items-center">
-        <img class="pr-2" src="/static/images/icon/share.png" style="height: 20px; width: 20px;"/> 分享
+        <img class="pr-2 icon-3" src="/static/images/icon/share.png"/> 分享
       </a>
       <a href="/pages/comment/main" class="d-flex w-25 justify-content-end align-items-center">
-        <img class="pr-2" src="/static/images/icon/message.png" style="height: 20px; width: 20px;"/> {{ author.reply_count ? '(' +  author.reply_count + ')' : '' }}
+        <img class="pr-2 icon-3" src="/static/images/icon/message.png"/> {{ author.reply_count ? '(' +  author.reply_count + ')' : '' }}
       </a>
     </div>
   </div>
@@ -80,6 +80,11 @@ export default {
     }
   },
   methods: {
+    gotoUser (e) {
+      wx.navigateTo({
+        url: '/pages/me/main?name=' + e
+      })
+    },
     getArticle () {
       this.loading = true
       let data = {}
@@ -125,6 +130,10 @@ export default {
         console.log(error)
       })
     }
+  },
+
+  created () {
+    store.commit('clearArticle')
   },
   mounted () {
     this.params.id = this.$root.$mp.query.id

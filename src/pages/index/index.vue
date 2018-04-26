@@ -14,20 +14,20 @@
       <li class="nav-item" v-bind:class="{ active: params.tab === 'ask', 'text-primary': params.tab === 'ask' }" @click="selectTab('ask')">
         <span class="nav-link">问答</span>
       </li>
-      <li class="nav-item" v-bind:class="{ active: params.tab === 'job', 'text-primary': params.tab === 'job' }" @click="selectTab('dev')">
+      <li class="nav-item" v-bind:class="{ active: params.tab === 'job', 'text-primary': params.tab === 'job' }" @click="selectTab('job')">
         <span class="nav-link">招聘</span>
       </li>
     </ul>
 
     <!-- 列表栏 -->
-    <scroll-view scroll-y style="height: calc(100vh - 88rpx);" @scroll="scrollFn" :scroll-top="scroll.top" @scrolltolower="loadMore" @scrolltoupper="refresh">
+    <scroll-view scroll-y style="height: calc(100vh - 2.25px);" @scroll="scrollFn" :scroll-top="scroll.top" @scrolltolower="loadMore" @scrolltoupper="refresh">
       <view v-for="(item, i) in list" :item="item" :key="i">
         <!-- <view class="nav-item">{{item}}</view> -->
         <a :href="'/pages/details/main?id='+item.id" class="card shadow-sm p-0 rounded-0 border-0 mb-3">
           <div class="card-header d-flex bg-white justify-content-center border-bottom-0" @click.stop="gotoUser(item.author.loginname)">
-            <img :src="item.author.avatar_url" alt="..." class="rounded-circle mr-2" style="height: 64rpx; width: 64rpx;">
-            <div class="flex-fill p-1">{{item.author.loginname}}</div>
-            <div class="p-1">{{item.last_reply_at}}</div>
+            <img :src="item.author.avatar_url" alt="..." class="rounded-circle mr-2" style="height: 2rem; width: 2rem;">
+            <div class="flex-fill p-2" >{{item.author.loginname}}</div>
+            <div class="p-2">{{item.last_reply_at}}</div>
           </div>
           <div class="card-body pt-0">
             <h6 class="card-title font-weight-bold">{{item.title}}</h6>
@@ -76,7 +76,7 @@ export default {
   methods: {
     gotoUser (e) {
       wx.navigateTo({
-        url: '/pages/user/main?name=' + e
+        url: '/pages/me/main?name=' + e
       })
     },
     selectTab (e) {

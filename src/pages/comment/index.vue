@@ -1,13 +1,13 @@
 <template>
-  <div class="container p-0">
+  <div class="container p-0 bg-light">
     <div :class="{'d-none': !loading}">
       <loading  />
     </div>
     <!-- 用户信息 -->
-    <scroll-view scroll-y style="height: calc(100vh - 100rpx);">
-      <view v-for="(item, i) in replies" :item="item" :key="i">
-        <div class="media border-bottom p-3">
-          <img class="mr-3" :src="item.author.avatar_url" alt="Generic placeholder image bg-primary" style="min-width: 100rpx; width: 100rpx; height: 100rpx">
+    <scroll-view scroll-y style="height: calc(100vh - 2rem);">
+      <div v-for="(item, i) in replies" :item="item" :key="i">
+        <div class="media border-bottom p-3 bg-white">
+          <img class="mr-3 icon-5 rounded" :src="item.author.avatar_url"  @click.stop="gotoUser(item.author.loginname)" alt="avatar">
           <div class="media-body"  @click.stop="replySomeOne(item)">
             <div class="d-flex flex-row">
               <div class="flex-fill">
@@ -22,8 +22,9 @@
             </div>
             <wxParse :content="item.content"/>    
           </div>
-        </div>
-      </view>
+        </div>   
+      </div>
+      <div class="text-center p-2 small font-weight-light">没有更多内容</div>
     </scroll-view>
     <div class="fixed-bottom d-flex w-auto p-2 bg-white border-top">
       <input class="form-control d-block w-100 small" :placeholder="placeholder" confirm-type="send" @input="bindinput" @confirm="submit" />
@@ -54,7 +55,8 @@ export default {
       reply: {
         loginname: '',
         reply_id: ''
-      }
+      },
+      senting: false
     }
   },
   components: {
@@ -70,8 +72,10 @@ export default {
     }
   },
   methods: {
-    decrement () {
-      store.commit('decrement')
+    gotoUser (e) {
+      wx.navigateTo({
+        url: '/pages/me/main?name=' + e
+      })
     },
     addReplies () {
       // 添加评论
@@ -103,15 +107,20 @@ export default {
       this.params.content = e.mp.detail.value
     },
     submit (e) {
-      let reply = this.reply.reply_id ? '[@' + this.reply.loginname + '](/user/' + this.reply.loginname + ')' : ''
-      let from = '<br/>来自酷炫的 [CNodeMD](https://github.com/TakWolf/CNode-Material-Design)'
-      this.params.content = reply + this.params.content + from
-      api.post('/topic/' + this.detail.id + '/replies', this.params).then(response => {
-        console.log(response)
-        // store.commit('ups', e)
-      }).catch(error => {
-        console.log(error)
-      })
+      if (!this.senting) {
+        this.senting = true
+        let reply = this.reply.reply_id ? '[@' + this.reply.loginname + '](/user/' + this.reply.loginname + ')' : ''
+        let from = '<br/>来自微信小程序 [cnode助手](https://github.com/strawbreey/mpvue-cnode)'
+        this.params.content = reply + this.params.content + from
+        api.post('/topic/' + this.detail.id + '/replies', this.params).then(response => {
+          this.params.content = 0
+          this.senting = false
+          console.log(response)
+        }).catch(error => {
+          this.senting = false
+          console.log(error)
+        })
+      }
     },
     replySomeOne (e) {
       console.log(e)

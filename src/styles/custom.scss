@@ -82,7 +82,8 @@ $theme-colors: (
 @import "node_modules/bootstrap/scss/utilities/visibility";
 
 // 引入第三方scss
-@import "./loader.scss"
+@import "./loader.scss";
+@import "./icon.scss";
 // .main{
 //   transform: translateX(-50%)
 // }
