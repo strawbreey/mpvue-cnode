@@ -20,8 +20,8 @@
         <div class="card-body px-0 w-100" v-if="article" >
           <h5 class="font-weight-bold pb-3">{{author.title}}</h5> 
           <wxParse :content="article" />
-          <time class="text-right pt-4">编辑于 {{detail.create_at}}</time>
-          <p class="text-right">著作权归作者所有</p>
+          <time class="text-right pt-4 font-weight-light">编辑于 {{detail.create_at}}</time>
+          <p class="text-right font-weight-light">著作权归作者所有</p>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
       <a class="d-flex w-25 justify-content-end align-items-center">
         <img class="pr-2 icon-3" src="/static/images/icon/share.png"/> 分享
       </a>
-      <a href="/pages/comment/main" class="d-flex w-25 justify-content-end align-items-center">
+      <a :href="'/pages/comment/main?id=' + params.id" class="d-flex w-25 justify-content-end align-items-center">
         <img class="pr-2 icon-3" src="/static/images/icon/message.png"/> {{ author.reply_count ? '(' +  author.reply_count + ')' : '' }}
       </a>
     </div>
@@ -96,21 +96,21 @@ export default {
         console.log(error)
       })
     },
+    // 收藏话题
     collectTopic (e) {
-      this.loading = true
-
       let data = {
         accesstoken: '',
         topic_id: e
       }
       api.post('/topic_collect/collect', data).then(response => {
-        store.commit('collectTopic', response)
-        // console.log(response)
-        wx.showToast({
-          title: '收藏成功',
-          icon: 'none'
-        })
-        this.loading = false
+        if (response) {
+          store.commit('collectTopic', response)
+          // console.log(response)
+          wx.showToast({
+            title: '收藏成功',
+            icon: 'none'
+          })
+        }
       }).catch(error => {
         console.log(error)
       })
@@ -131,12 +131,12 @@ export default {
       })
     }
   },
-
   created () {
     store.commit('clearArticle')
   },
   mounted () {
     this.params.id = this.$root.$mp.query.id
+    console.log(this.$root.$mp.query.id)
     this.loading = true
     this.getArticle()
   }

@@ -18,7 +18,7 @@
     <!-- 已登录 -->
     <div :class="{ invisible: !login }">
       <!-- 列表 -->
-      <scroll-view scroll-y style="height: calc(100vh - 2.5rem);" class="bg-light">
+      <scroll-view scroll-y style="height: calc(100vh - 2.2rem);" class="bg-light">
         <div v-for="(item, i) in unread" :item="item" :key="i">
           <div class="media border-bottom p-3 bg-gradient-light bg-white">
             <img class="mr-3 icon-5 rounded" @click.stop="gotoUser(item.author.loginname)" :src="item.author.avatar_url" alt="avatar">

@@ -65,13 +65,9 @@ export default {
     }
   },
   mounted () {
-    // this.params.id = this.$root.$mp.query.id
-    // this.loading = true
-    // this.getArticle()
     if (this.$root.$mp.query && this.$root.$mp.query.from) {
       this.from = this.$root.$mp.query.from
     }
-    console.log(this.$root.$mp.query)
   }
 }
 

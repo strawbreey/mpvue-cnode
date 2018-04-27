@@ -4,7 +4,7 @@
       <loading  />
     </div>
     <!-- 用户信息 -->
-    <scroll-view scroll-y style="height: calc(100vh - 2rem);">
+    <scroll-view scroll-y style="height: calc(100vh - 2.5rem);">
       <div v-for="(item, i) in replies" :item="item" :key="i">
         <div class="media border-bottom p-3 bg-white">
           <img class="mr-3 icon-5 rounded" :src="item.author.avatar_url"  @click.stop="gotoUser(item.author.loginname)" alt="avatar">
@@ -27,7 +27,7 @@
       <div class="text-center p-2 small font-weight-light">没有更多内容</div>
     </scroll-view>
     <div class="fixed-bottom d-flex w-auto p-2 bg-white border-top">
-      <input class="form-control d-block w-100 small" :placeholder="placeholder" confirm-type="send" @input="bindinput" @confirm="submit" />
+      <input class="form-control d-block w-100 p-1" :value="content" :placeholder="placeholder" cursor-spacing="10" confirm-type="send" @input="bindinput" @confirm="submit" />
       <a type="button" class="close" aria-label="Close" @click="clear">
         <span aria-hidden="true">&times;</span>
       </a>
@@ -46,6 +46,7 @@ export default {
   data () {
     return {
       list: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      content: '',
       params: {
         accesstoken: '',
         content: '',
@@ -96,25 +97,28 @@ export default {
       let data = {
         accesstoken: ''
       }
-      store.commit('ups', e)
       api.post('/reply/' + e + '/ups', data).then(response => {
-        // store.commit('ups', e)
+        if (response) {
+          store.commit('ups', e)
+        }
       }).catch(error => {
         console.log(error)
       })
     },
     bindinput (e) {
       this.params.content = e.mp.detail.value
+      this.content = e.mp.detail.value
     },
     submit (e) {
       if (!this.senting) {
         this.senting = true
         let reply = this.reply.reply_id ? '[@' + this.reply.loginname + '](/user/' + this.reply.loginname + ')' : ''
-        let from = '<br/>来自微信小程序 [cnode助手](https://github.com/strawbreey/mpvue-cnode)'
+        let from = '  \n ☆ 来自微信小程序 [cnode助手](https://github.com/strawbreey/mpvue-cnode)'
         this.params.content = reply + this.params.content + from
         api.post('/topic/' + this.detail.id + '/replies', this.params).then(response => {
-          this.params.content = 0
           this.senting = false
+          this.clear()
+          this.getArticle()
           console.log(response)
         }).catch(error => {
           this.senting = false
@@ -134,12 +138,27 @@ export default {
       this.placeholder = '回复评论'
       this.params.reply_id = ''
 
+      this.params.content = ''
+      this.content = ''
+
       this.reply.loginname = ''
       this.reply.reply_id = ''
+    },
+    getArticle () {
+      this.loading = true
+      let data = {}
+      // store.commit('clearArticle')
+      api.get('/topic/' + this.$root.$mp.query.id, data).then(response => {
+        store.commit('getArticle', response)
+        this.loading = false
+      }).catch(error => {
+        console.log(error)
+      })
     }
   },
   mounted () {
     this.clear()
+    console.log(this.$root.$mp.query)
   }
 }
 

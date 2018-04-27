@@ -56,7 +56,6 @@ const store = new Vuex.Store({
       }
     },
     collectTopic: (state, action) => {
-      console.log(action)
       state.detail.is_collect = true
     },
     deCollectTopic: (state, action) => {

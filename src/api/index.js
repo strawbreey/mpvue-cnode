@@ -36,6 +36,7 @@ api.interceptors.request.use((request) => {
             }
           }
         })
+        return Promise.resolve(false)
       }
     } else {
       if (accesstoken) {

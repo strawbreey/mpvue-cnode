@@ -20,7 +20,7 @@
     </ul>
 
     <!-- 列表栏 -->
-    <scroll-view scroll-y style="height: calc(100vh - 2.25px);" @scroll="scrollFn" :scroll-top="scroll.top" @scrolltolower="loadMore" @scrolltoupper="refresh">
+    <scroll-view scroll-y style="height: calc(100vh - 2.0rem);" @scroll="scrollFn" :scroll-top="scroll.top" @scrolltolower="loadMore" @scrolltoupper="refresh">
       <view v-for="(item, i) in list" :item="item" :key="i">
         <!-- <view class="nav-item">{{item}}</view> -->
         <a :href="'/pages/details/main?id='+item.id" class="card shadow-sm p-0 rounded-0 border-0 mb-3">
@@ -35,6 +35,7 @@
           </div>
         </a>
       </view>
+      <div v-if="list.length > 10" class="text-center p-2 small font-weight-light">加载中...</div>      
     </scroll-view>
   </div>
 </template>
@@ -108,8 +109,6 @@ export default {
       this.scroll.scrollTop = e.mp.detail.scrollTop
     },
     loadMore (e) {
-      console.log(e)
-      console.log('loadmore')
       this.scroll.top = this.scroll.scrollTop
       this.params.page++
       this.getArticleList()
@@ -120,15 +119,7 @@ export default {
   },
 
   created () {
-    // 调用应用实例的方法获取全局数据
     this.getArticleList()
-    console.log(this)
   }
 }
 </script>
-
-<style lang="scss">
-button::after{
-  // content: none;
-}
-</style>

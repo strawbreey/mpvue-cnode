@@ -20,7 +20,7 @@
         <a class="flex-fill nav-link text-center rounded-0" v-bind:class="{ active: current === 1 }" @click="changeCurrent(1)">回复</a>
         <a class="flex-fill nav-link text-center rounded-0" v-bind:class="{ active: current === 2 }" @click="changeCurrent(2)">收藏</a>
       </nav>
-      <swiper style="height: calc(100vh - 2rem);" :indicator-dots="false" :autoplay="false" @change="bindchange" :current="current">
+      <swiper style="height: calc(100vh - 1.8rem);" :indicator-dots="false" :autoplay="false" @change="bindchange" :current="current">
         <swiper-item>
           <scroll-view scroll-y style="height: calc(100vh - 88rpx);">
             <div v-for="(item, i) in topic" :item="item" :key="i">
