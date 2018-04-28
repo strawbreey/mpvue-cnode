@@ -36,7 +36,6 @@ const store = new Vuex.Store({
       // })
     },
     clearlist: (state) => {
-      console.log('222')
       state.list = []
     }
   }

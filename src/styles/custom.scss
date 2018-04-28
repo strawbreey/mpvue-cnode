@@ -60,6 +60,7 @@ $theme-colors: (
 @import "node_modules/bootstrap/scss/media";
 @import "node_modules/bootstrap/scss/close";
 @import "node_modules/bootstrap/scss/nav";
+@import "node_modules/bootstrap/scss/badge";
 
 // 小程序不能识别@support, 所以移除position: sticky
 // 小程序不能识别属性选择器, 所以移除属性选择器
@@ -87,6 +88,5 @@ $theme-colors: (
 // .main{
 //   transform: translateX(-50%)
 // }
-
 
 

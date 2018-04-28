@@ -26,7 +26,10 @@
         <a :href="'/pages/details/main?id='+item.id" class="card shadow-sm p-0 rounded-0 border-0 mb-3">
           <div class="card-header d-flex bg-white justify-content-center border-bottom-0" @click.stop="gotoUser(item.author.loginname)">
             <img :src="item.author.avatar_url" alt="..." class="rounded-circle mr-2" style="height: 2rem; width: 2rem;">
-            <div class="flex-fill p-2" >{{item.author.loginname}}</div>
+            <div class="flex-fill p-2" >{{item.author.loginname}}
+              <span v-if="item.top" class="badge small badge-danger">置顶</span>
+              <span v-if="item.good" class="badge small badge-danger">精华</span>              
+            </div>
             <div class="p-2 font-weight-light small">{{item.last_reply_at}}</div>
           </div>
           <div class="card-body pt-0">
@@ -118,8 +121,12 @@ export default {
     }
   },
 
-  created () {
+  mounted () {
     this.getArticleList()
+  },
+
+  onShow () {
+    this.scroll.top = this.scroll.scrollTop
   }
 }
 </script>

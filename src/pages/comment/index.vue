@@ -113,7 +113,7 @@ export default {
       if (!this.senting) {
         this.senting = true
         let reply = this.reply.reply_id ? '[@' + this.reply.loginname + '](/user/' + this.reply.loginname + ')' : ''
-        let from = ' \n ☆ 来自微信小程序 [cnode助手](https://github.com/strawbreey/mpvue-cnode)'
+        let from = '  \n ☆ 来自微信小程序 [cnode助手](https://github.com/strawbreey/mpvue-cnode)'
         this.params.content = reply + this.params.content + from
         api.post('/topic/' + this.detail.id + '/replies', this.params).then(response => {
           this.senting = false
