@@ -26,9 +26,9 @@
       </div>
       <div class="text-center p-2 small font-weight-light">没有更多内容</div>
     </scroll-view>
-    <div class="fixed-bottom d-flex w-auto p-2 bg-white border-top">
-      <input class="form-control d-block w-100 p-1" :value="content" :placeholder="placeholder" cursor-spacing="10" confirm-type="send" @input="bindinput" @confirm="submit" />
-      <a type="button" class="close" aria-label="Close" @click="clear">
+    <div class="fixed-bottom d-flex w-auto px-2 py-1 bg-white border-top">
+      <input class="form-control d-block w-100 p-2" :value="content" :placeholder="placeholder" cursor-spacing="10" confirm-type="send" @input="bindinput" @confirm="submit" />
+      <a type="button" class="close pt-1 px-2" aria-label="Close" @click="clear">
         <span aria-hidden="true">&times;</span>
       </a>
     </div>
@@ -113,7 +113,7 @@ export default {
       if (!this.senting) {
         this.senting = true
         let reply = this.reply.reply_id ? '[@' + this.reply.loginname + '](/user/' + this.reply.loginname + ')' : ''
-        let from = '  \n ☆ 来自微信小程序 [cnode助手](https://github.com/strawbreey/mpvue-cnode)'
+        let from = ' \n ☆ 来自微信小程序 [cnode助手](https://github.com/strawbreey/mpvue-cnode)'
         this.params.content = reply + this.params.content + from
         api.post('/topic/' + this.detail.id + '/replies', this.params).then(response => {
           this.senting = false

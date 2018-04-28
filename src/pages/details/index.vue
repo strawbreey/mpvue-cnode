@@ -5,7 +5,7 @@
       <loading  />
     </div>
 
-    <div :class="{'d-none': loading}" class="bg-white p-3 card rounded-0 shadow-sm">
+    <div :class="{'d-none': loading}" class="bg-white p-3 rounded-0">
       <!-- 用户信息 -->
       <div class="media"  @click.stop="gotoUser(author.loginname)">
         <img class="mr-3 rounded-1 icon-5" :src="author.avatar_url" alt="avatar">
@@ -16,12 +16,12 @@
       </div>
 
       <!-- 内容 -->
-      <div class="card p-0 pb-4 m-0 border-0 rounded-0">
+      <div class="card p-0 m-0 border-0 rounded-0">
         <div class="card-body px-0 w-100" v-if="article" >
           <h5 class="font-weight-bold pb-3">{{author.title}}</h5> 
           <wxParse :content="article" />
-          <time class="text-right pt-4 font-weight-light">编辑于 {{detail.create_at}}</time>
-          <p class="text-right font-weight-light">著作权归作者所有</p>
+          <time class="text-right pt-4 font-weight-light small">编辑于 {{detail.create_at}}</time>
+          <p class="text-right font-weight-light mb-0 small">著作权归作者所有</p>
         </div>
       </div>
     </div>
@@ -131,14 +131,15 @@ export default {
       })
     }
   },
-  created () {
-    store.commit('clearArticle')
-  },
   mounted () {
+    console.log(222)
     this.params.id = this.$root.$mp.query.id
-    console.log(this.$root.$mp.query.id)
     this.loading = true
     this.getArticle()
+  },
+  onUnload () {
+    store.commit('clearArticle')
+    console.log('beforeDestroy')
   }
 }
 

@@ -24,6 +24,8 @@
             <img class="mr-3 icon-5 rounded" @click.stop="gotoUser(item.author.loginname)" :src="item.author.avatar_url" alt="avatar">
             <div class="media-body" @click="oneRead(item.id)">
               <h6 v-if="item.type === 'reply'" class="mt-0">{{item.author.loginname}} 评论了<span class="inline font-weight-bold" @click="goto(item.topic.id)" :href="'/pages/details/main?id='+item.topic.id"> {{item.topic.title}}</span> 主题下</h6>
+              <h6 v-if="item.type === 'at'" class="mt-0">{{item.author.loginname}} 在 <span class="inline font-weight-bold" @click="goto(item.topic.id)" :href="'/pages/details/main?id='+item.topic.id"> {{item.topic.title}}</span> 主题下  @了你</h6>
+              
               <wxParse :content="item.reply.content" />
               <div>{{item.create_at}}</div>
             </div>
@@ -35,6 +37,7 @@
             <img class="mr-3 icon-5 rounded" @click.stop="gotoUser(item.author.loginname)" :src="item.author.avatar_url"  alt="avatar">
             <div class="media-body" @click="oneRead(item.id)">
               <h6 v-if="item.type === 'reply'" class="mt-0">{{item.author.loginname}} 评论了<span class="inline font-weight-bold" @click="goto(item.topic.id)" :href="'/pages/details/main?id='+item.topic.id"> {{item.topic.title}}</span> 主题下</h6>
+              <h6 v-if="item.type === 'at'" class="mt-0">{{item.author.loginname}} 在 <span class="inline font-weight-bold" @click="goto(item.topic.id)" :href="'/pages/details/main?id='+item.topic.id"> {{item.topic.title}}</span> 主题下  @了你</h6>              
               <wxParse :content="item.reply.content" />
               <div>{{item.create_at}}</div>
             </div>
@@ -59,7 +62,6 @@
 </template>
 
 <script>
-// import { formatTime } from '@/utils/index'
 import store from './store'
 import auth from '../auth/store'
 import api from '@/api/index'
@@ -119,7 +121,6 @@ export default {
           accesstoken: ''
         }
         api.post('/message/mark_all', data).then(response => {
-          console.log('222')
           store.commit('allRead', response)
         }).catch(error => {
           console.log(error)
@@ -127,13 +128,11 @@ export default {
       }
     },
     oneRead (e) {
-      console.log(e)
       let id = e
       let data = {
         accesstoken: 'd94a1a54-f215-4757-bcfd-486be823e876'
       }
       api.post('/message/mark_one/' + id, data).then(response => {
-        console.log('222')
         store.commit('oneRead', response)
       }).catch(error => {
         console.log(error)

@@ -41,7 +41,7 @@
               <div class="media border-bottom border-gray p-3 bg-white">
                 <img class="mr-3 icon-5 rounded" :src="item.author.avatar_url"  alt="avatar">
                 <div class="media-body" @click="oneRead(item.id)">
-                  <h6 class="mt-0">{{item.author.loginname}} 评论了主题 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a></h6>
+                  <h6 class="mt-0">他回复了 {{item.author.loginname}} 的主题 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a></h6>
                   <div>{{item.last_reply_at}}</div>
                 </div>
               </div>
@@ -55,7 +55,7 @@
               <div class="media border-bottom border-gray p-3 bg-white">
                 <img class="mr-3 icon-5 rounded" :src="item.author.avatar_url" alt="Generic placeholder image">
                 <div class="media-body" @click="oneRead(item.id)">
-                  <h6 class="mt-0">{{item.author.loginname}} 收藏了主题 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a></h6>
+                  <h6 class="mt-0">他 收藏了{{item.author.loginname}} 的主题 <a :href="'/pages/details/main?id='+item.id" class="d-inline font-weight-bold"> {{item.title}}</a></h6>
                   <div>{{item.last_reply_at}}</div>
                 </div>
               </div>
@@ -155,7 +155,6 @@ export default {
       this.current = e
     },
     logout () {
-      console.log('logout')
       auth.commit('logout')
     }
   },

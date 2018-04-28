@@ -4,7 +4,7 @@
       <loading  />
     </div>
     <!-- 导航栏 -->
-    <ul class="nav nav-justified shadow-sm mb-1">
+    <ul class="nav nav-justified shadow mb-2 fixed-top" style="z-index: 10000">
       <li class="nav-item" v-bind:class="{ active: params.tab === 'all', 'text-primary': params.tab === 'all' }" @click="selectTab('all')">
         <span class="nav-link">全部</span>
       </li>
@@ -20,17 +20,17 @@
     </ul>
 
     <!-- 列表栏 -->
-    <scroll-view scroll-y style="height: calc(100vh - 2.0rem);" @scroll="scrollFn" :scroll-top="scroll.top" @scrolltolower="loadMore" @scrolltoupper="refresh">
+    <scroll-view scroll-y style="margin-top: 80rpx;height: calc(100vh - 80rpx);" @scroll="scrollFn" :scroll-top="scroll.top" @scrolltolower="loadMore" @scrolltoupper="refresh">
       <view v-for="(item, i) in list" :item="item" :key="i">
         <!-- <view class="nav-item">{{item}}</view> -->
         <a :href="'/pages/details/main?id='+item.id" class="card shadow-sm p-0 rounded-0 border-0 mb-3">
           <div class="card-header d-flex bg-white justify-content-center border-bottom-0" @click.stop="gotoUser(item.author.loginname)">
             <img :src="item.author.avatar_url" alt="..." class="rounded-circle mr-2" style="height: 2rem; width: 2rem;">
             <div class="flex-fill p-2" >{{item.author.loginname}}</div>
-            <div class="p-2">{{item.last_reply_at}}</div>
+            <div class="p-2 font-weight-light small">{{item.last_reply_at}}</div>
           </div>
           <div class="card-body pt-0">
-            <h6 class="card-title font-weight-bold">{{item.title}}</h6>
+            <h6 class="font-weight-bold">{{item.title}}</h6>
             <p class="card-text text-truncate-1">{{item.content}}</p>
           </div>
         </a>
