@@ -10,8 +10,8 @@
           <img class="rounded-circle bg-white shadow-sm img-thumbnail m-2"  :src="userinfo.avatar_url" alt="avatar" style="width: 5rem; height: 5rem; ">
         </a>
       </div>
-      <div class="text-center font-weight-bold mt-3">{{userinfo.loginname}}<span class="small" @click="logout">(注销)</span></div>
-      <div class="text-center">积分: {{userinfo.score}}</div>
+      <div class="text-center font-weight-bold mt-3" v-if="userinfo.loginname">{{userinfo.loginname}}<span class="small" @click="logout">(注销)</span></div>
+      <div class="text-center" v-if="userinfo.score" >积分: {{userinfo.score}}</div>
     </div>
 
     <div class="position-relative">

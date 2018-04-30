@@ -24,11 +24,13 @@
       <view v-for="(item, i) in list" :item="item" :key="i">
         <!-- <view class="nav-item">{{item}}</view> -->
         <a :href="'/pages/details/main?id='+item.id" class="card shadow-sm p-0 rounded-0 border-0 mb-3">
-          <div class="card-header d-flex bg-white justify-content-center border-bottom-0" @click.stop="gotoUser(item.author.loginname)">
-            <img :src="item.author.avatar_url" alt="..." class="rounded-circle mr-2" style="height: 2rem; width: 2rem;">
-            <div class="flex-fill p-2" >{{item.author.loginname}}
-              <span v-if="item.top" class="badge small badge-danger">置顶</span>
-              <span v-if="item.good" class="badge small badge-danger">精华</span>              
+          <div class="card-header d-flex bg-white justify-content-center align-items-center border-bottom-0" @click.stop="gotoUser(item.author.loginname)">
+            <img :src="item.author.avatar_url" alt="..." class="rounded-circle mr-2 icon-4">
+            <div class="flex-fill p-1" >{{item.author.loginname}}
+              <span class="small ml-1">
+              <span v-if="item.top" class="badge badge-danger">置顶</span>
+              <span v-if="item.good" class="badge badge-danger">精华</span>    
+              </span>            
             </div>
             <div class="p-2 font-weight-light small">{{item.last_reply_at}}</div>
           </div>

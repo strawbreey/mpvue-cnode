@@ -1,5 +1,5 @@
 <template>
-  <div class="container p-5">
+  <div class="position-relative p-5" style="box-sizing: border-box;">
     <!-- 用户授权 -->
     <div class="text-center border-bottom mb-3 py-5">
       <image src="/static/images/svg/cnodejs.svg" style="width: 423rpx; height: 100rpx"/>
@@ -9,8 +9,8 @@
     <p class="small text-left ml-4 mb-2">获得你的公开信息(昵称, 头像等)</p>
     <p class="small text-left ml-4 mb-5">扫码登录cnode账号</p>
 
-    <div class="btn btn-lg btn-primary mb-3" @click="scan">扫码登录</div>
-    <div class="btn btn-lg btn-secondary "  @click="refuse">取消</div>
+    <a class="btn btn-lg text-white btn-block btn-primary mb-3 px-0" @click="scan">扫码登录</a>
+    <a class="btn btn-lg text-white btn-block btn-secondary px-0"  @click="refuse">取消</a>
 
   </div>
 </template>
@@ -21,15 +21,7 @@ import store from './store'
 import api from '@/api/index'
 
 export default {
-  computed: {
-    count () {
-      return store.state.count
-    }
-  },
   methods: {
-    increment () {
-      store.commit('increment')
-    },
     refuse () {
       console.log('refuse')
       wx.navigateBack({delta: 1})
@@ -72,8 +64,3 @@ export default {
 }
 
 </script>
-<style>
-button::after{
-  content: none;
-}
-</style>

@@ -8,12 +8,14 @@ export default {
 </script>
 
 <style lang='scss'>
+page{
+  font-size: 16px;
+}
 .wxParse {
   margin: 0 !important;
   .img{
     display: block;
     width: 100%;
-    // padding: .5rem 0;
     padding-bottom: 1rem !important;
   }
   .blockquote{

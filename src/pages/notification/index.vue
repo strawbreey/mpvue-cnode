@@ -49,13 +49,13 @@
     </div>
 
     <!-- 未登录状态 -->
-    <div class="fixed-top" :class="{ invisible: login }" style="height: 80vh">
+    <div class="fixed-top" :class="{ invisible: login }" style="height: 90vh">
       <div class="d-flex h-100 flex-column justify-content-center align-items-center">
         <img src="/static/images/icon/notification.png" class="pb-3" style="width: 4rem; height: 4rem">
         <p class="font-weight-bold">还没有收到通知</p>
         <p class="small w-50 text-center font-weight-light">你获得的回复, 赞同等动态更新将会显示在这里</p>
         
-        <a href="/pages/auth/main?from=notification" class="btn btn-primary text-white w-25">登录</a>
+        <a href="/pages/auth/main?from=notification" class="btn btn-primary text-white w-25 mt-5">登录</a>
       </div>
     </div>
   </div>

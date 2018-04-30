@@ -12,7 +12,7 @@ const store = new Vuex.Store({
   state: {
     detail: null,
     content: null,
-    replies: null,
+    replies: [],
     author: {
       avatar_url: '',
       loginname: '',
@@ -22,8 +22,7 @@ const store = new Vuex.Store({
     }
   },
   getters: {
-    article: state => state.detail ? state.detail.content : null,
-    replies: state => state.detail ? state.detail.replies : null
+    article: state => state.detail ? state.detail.content : null
   },
   mutations: {
     getArticle: (state, action) => {
@@ -36,17 +35,20 @@ const store = new Vuex.Store({
         state.author.last_reply_at = getTimeInfo(action.last_reply_at)
         state.author.title = action.title
         state.author.reply_count = action.reply_count
-
-        _.map(action.replies, res => {
-          res.create_at = getTimeInfo(res.create_at)
-        })
-        state.replies = action.replies
+        state.author.good = action.good
+        state.author.top = action.top
+        if (action.replies) {
+          _.map(action.replies, res => {
+            res.create_at = getTimeInfo(res.create_at)
+          })
+          state.replies = action.replies.slice(0, 10)
+        }
       }
     },
     clearArticle: (state) => {
       state.detail = null
       state.content = null
-      state.replies = null
+      state.replies = []
       state.author = {
         avatar_url: '',
         loginname: '',
@@ -74,6 +76,11 @@ const store = new Vuex.Store({
           res.is_uped = !res.is_uped
         }
       })
+    },
+    getMoreReply: (state) => {
+      if (state.replies.length < state.detail.replies.length) {
+        state.replies = state.detail.replies.slice(0, (state.replies.length / 10 + 1) * 10)
+      }
     }
   }
 })

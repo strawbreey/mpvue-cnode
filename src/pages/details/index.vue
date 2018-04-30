@@ -15,13 +15,13 @@
         </div>
       </div> -->
 
-      <div class="d-flex bg-white justify-content-center border-bottom-0" @click.stop="gotoUser(author.loginname)">
-        <img :src="author.avatar_url" alt="..." class="rounded-circle mr-2" style="height: 2rem; width: 2rem;">
-        <div class="flex-fill p-2" >{{author.loginname}}
-          <!-- <span v-if="item.top" class="badge small badge-danger">置顶</span>
-          <span v-if="item.good" class="badge small badge-danger">精华</span>               -->
+      <div class="position-relative d-flex bg-white justify-content-center align-items-center border-bottom-0" @click.stop="gotoUser(author.loginname)">
+        <img :src="author.avatar_url" alt="..." class="rounded-circle mr-2 icon-4">
+        <div class="flex-fill p-1 align-middle" >{{author.loginname}}
+          <span v-if="author.top" class="badge small badge-danger">置顶</span>
+          <span v-if="author.good" class="badge small badge-danger">精华</span>              
         </div>
-        <div class="p-2 font-weight-light small">{{author.last_reply_at}}</div>
+        <div class="p-1 align-bottom font-weight-light small">{{author.last_reply_at}}</div>
       </div>
 
       <!-- 内容 -->
@@ -37,17 +37,17 @@
 
 
     <!-- 底部菜单栏 -->
-    <div class="fixed-bottom d-flex w-auto bg-white small">
-      <a v-if="detail && detail.is_collect" class="flex-fill pl-3 d-flex justify-content-start align-items-center small button" @click="deCollectTopic(detail.id)" style="border-right: none;">
+    <div class="fixed-bottom d-flex w-auto bg-white small border-top border-light">
+      <a v-if="detail && detail.is_collect" class="flex-fill pl-3 d-flex justify-content-start align-items-center" @click="deCollectTopic(detail.id)" style="border-right: none;">
         <img src="/static/images/icon/mark-fill.png" class="icon-3"/> 已收藏</a>
-      <a v-else class="flex-fill pl-3 d-flex justify-content-start align-items-center small button" @click="collectTopic(detail.id)" style="border-right: none;">
+      <a v-else class="flex-fill pl-3 d-flex justify-content-start align-items-center" @click="collectTopic(detail.id)" style="border-right: none;">
         <img src="/static/images/icon/mark.png" class="icon-3"/> 收藏</a>
-      <button hover-class="none" class="d-flex p-2 w-25 justify-content-center align-items-center hide-button" style="border: none;" open-type="share">
+      <button hover-class="none" class="d-flex p-2 w-25 justify-content-center align-items-center bg-white"  open-type="share">
         <img class="pr-2 icon-3" src="/static/images/icon/share.png"/>
         分享
       </button>
      
-      <a :href="'/pages/comment/main?id=' + params.id" class="d-flex w-25 justify-content-center align-items-center button" style="border-left: none;">
+      <a :href="'/pages/comment/main?id=' + params.id" class="d-flex w-25 justify-content-center align-items-center" style="border-left: none;">
         <img class="pr-2 icon-3" src="/static/images/icon/message.png"/> {{ author.reply_count ? '(' +  author.reply_count + ')' : '' }}
       </a>
     </div>
@@ -82,9 +82,6 @@ export default {
   },
 
   computed: {
-    replies () {
-      return store.getters.replies
-    },
     article () {
       return store.state.content
     },
@@ -173,7 +170,12 @@ export default {
 
 <style>
 .button {
-  border: 1rpx solid #aaa;
+  border: none;
 }
+button::after {
+ content: none;
+ border: none;
+}
+
 </style>
 

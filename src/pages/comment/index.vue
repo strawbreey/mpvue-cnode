@@ -4,7 +4,7 @@
       <loading  />
     </div>
     <!-- 用户信息 -->
-    <scroll-view scroll-y style="height: calc(100vh - 2.5rem);">
+    <scroll-view scroll-y style="height: calc(100vh - 2.5rem);" @scrolltolower="getMoreReply">
       <div v-for="(item, i) in replies" :item="item" :key="i">
         <div class="media border-bottom p-3 bg-white">
           <img class="mr-3 icon-5 rounded" :src="item.author.avatar_url"  @click.stop="gotoUser(item.author.loginname)" alt="avatar">
@@ -24,7 +24,9 @@
           </div>
         </div>   
       </div>
-      <div class="text-center p-2 small font-weight-light">没有更多内容</div>
+      <div class="text-center p-2 small font-weight-light" v-if="detail && replies && (detail.replies.length > replies.length)">加载更多</div>
+      <div class="text-center p-2 small font-weight-light" v-else>没有更多内容</div>
+      
     </scroll-view>
     <div class="fixed-bottom d-flex w-auto px-2 py-1 bg-white border-top">
       <input class="form-control d-block w-100 p-2" :value="content" :placeholder="placeholder" cursor-spacing="10" confirm-type="send" @input="bindinput" @confirm="submit" />
@@ -45,7 +47,6 @@ import loading from '@/components/loading'
 export default {
   data () {
     return {
-      list: [1, 2, 3, 4, 5, 6, 7, 8, 9],
       content: '',
       params: {
         accesstoken: '',
@@ -66,7 +67,7 @@ export default {
   },
   computed: {
     replies () {
-      return store.getters.replies
+      return store.state.replies
     },
     detail () {
       return store.state.detail
@@ -112,7 +113,7 @@ export default {
     submit (e) {
       if (!this.senting) {
         this.senting = true
-        let reply = this.reply.reply_id ? '[@' + this.reply.loginname + '](/user/' + this.reply.loginname + ')' : ''
+        let reply = this.reply.reply_id ? '[@' + this.reply.loginname + '](/user/' + this.reply.loginname + ') ' : ''
         let from = '  \n ☆ 来自微信小程序 [cnode助手](https://github.com/strawbreey/mpvue-cnode)'
         this.params.content = reply + this.params.content + from
         api.post('/topic/' + this.detail.id + '/replies', this.params).then(response => {
@@ -154,6 +155,11 @@ export default {
       }).catch(error => {
         console.log(error)
       })
+    },
+    getMoreReply () {
+      // 获取更多的回复
+      store.commit('getMoreReply')
+      console.log('more')
     }
   },
   mounted () {
