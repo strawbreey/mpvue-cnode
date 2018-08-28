@@ -13,7 +13,7 @@
 - 使用`PostCSS`对CSS进行预处理
 
 ## 预览
-![](./static/images/doc/mpvue-qrcode.jpg 'cnode助手')
+
 
 备注: 由于个人小程序只有五个，且cnode助手涉及资讯，招聘等不让审核通过，所以暂停服务。想体验的化可以把代码拉下来试试
 
